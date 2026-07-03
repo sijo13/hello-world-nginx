@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 1. List the Kubernetes manifests to manage
+resources:
+  - deployment.yaml
+  - service.yaml
+
+# 2. Automatically inject these labels into all resources
+commonLabels:
+  app.kubernetes.io/managed-by: kustomize
+  environment: development
+
+# 3. Automatically add this prefix to the names of all resources
+namePrefix: dev-
+
+# 4. Enforce a specific namespace for all resources
+namespace: default
