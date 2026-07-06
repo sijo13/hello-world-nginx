@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - ingress.yaml
 
 # 2. Automatically inject these labels into all resources
 commonLabels:

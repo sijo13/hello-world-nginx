@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-frontend-ingress
+  namespace: default # MUST match the namespace where 'nginx-service' lives
+  annotations:
+    # Forces this Ingress to be picked up by your NGINX Controller, NOT the AWS ALB Controller directly
+    kubernetes.io/ingress.class: "nginx"
+    
+    # Optional: Enable client-side body size increase if uploading large files
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+spec:
+  ingressClassName: nginx 
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix # Matches the root URL and all paths underneath it (e.g., /about, /static)
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80 # Matches the internal ClusterIP service port
